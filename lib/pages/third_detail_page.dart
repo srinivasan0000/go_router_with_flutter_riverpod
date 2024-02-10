@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThirdDetailPage extends ConsumerWidget {
-  const ThirdDetailPage(
-      {super.key,
-      required this.id,
-      required this.firstName,
-      required this.lastName});
+  const ThirdDetailPage({super.key, required this.id, required this.firstName, required this.lastName});
   final String id;
   final String firstName;
   final String lastName;
@@ -14,13 +10,17 @@ class ThirdDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Third Detail Page"),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           children: [
-            Text("Your Id : $id"),
-            Text("Your First Name : $firstName"),
-            Text("Your Last Name : $lastName"),
+            Text("PathParameter : $id"),
+            Text("QueryParameter First Name : $firstName"),
+            Text("QueryParameter Last Name : $lastName"),
           ],
         ),
       ),

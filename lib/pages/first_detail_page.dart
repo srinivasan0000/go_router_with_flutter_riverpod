@@ -5,8 +5,7 @@ class FirstDetailPage extends ConsumerStatefulWidget {
   const FirstDetailPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _FirstDetailPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FirstDetailPageState();
 }
 
 class _FirstDetailPageState extends ConsumerState<FirstDetailPage> {
@@ -14,30 +13,34 @@ class _FirstDetailPageState extends ConsumerState<FirstDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('First Detail Page'),
-        ),
-        body: Center(
-            child: Column(
-          children: [
-            const Text("First Detail Page"),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  counter++;
-                });
-              },
-              child: const Text("Increment"),
-            ),
-            Text("Counter: $counter"),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: const Text('First Detail Page'),
+      ),
+      body: Center(
+          child: Text(
+        "Counter: $counter",
+        style: const TextStyle(fontSize: 23),
+      )),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+              heroTag: 'reset',
+              onPressed: () => setState(() {
                     counter = 0;
-                  });
-                },
-                child: const Text("Incremenet"))
-          ],
-        )));
+                  }),
+              child: const Icon(Icons.refresh)),
+          FloatingActionButton(
+            heroTag: 'increment',
+            child: const Icon(Icons.add),
+            onPressed: () => setState(() {
+              counter++;
+            }),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -13,29 +13,24 @@ class ThirdPage extends ConsumerWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Third Page'),
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          centerTitle: true,
         ),
         body: Center(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Third Page"),
             ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed(Routes.thirdDetailPage.name,
-                      pathParameters: {
-                        "id": "1"
-                      },
-                      queryParameters: {
-                        "firstName": "John",
-                        "lastName": "Doe"
-                      });
+                  GoRouter.of(context).goNamed(Routes.thirdDetailPage.name, pathParameters: {"id": "1"}, queryParameters: {"firstName": "John", "lastName": "Doe"});
                 },
-                child: const Text("view third detail page")),
-            OutlinedButton(
+                child: const Text("View Third Detail Page")),
+            TextButton(
                 onPressed: () {
                   context.goNamed(Routes.signin.name);
                 },
                 child: const Text("Sign In")),
-            OutlinedButton(
+            TextButton(
                 onPressed: () {
                   ref.read(authStateProvider.notifier).setAuthState(false);
                 },

@@ -9,20 +9,25 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Sign In'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        centerTitle: true,
+      ),
       body: Center(
-        child: Column(children: [
-          const Text("SignIn"),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           ElevatedButton(
               onPressed: () {
                 ref.read(authStateProvider.notifier).setAuthState(true);
               },
               child: const Text("Sign In")),
+          const SizedBox(height: 10),
           ElevatedButton(
               onPressed: () {
                 context.goNamed(Routes.signup.name);
               },
               child: const Text("Not a Member? Sign Up")),
+          const SizedBox(height: 10),
           ElevatedButton(
               onPressed: () {
                 context.goNamed(Routes.firstPage.name);
@@ -45,5 +50,4 @@ class AuthStateNotifier extends Notifier<bool> {
   }
 }
 
-final authStateProvider =
-    NotifierProvider<AuthStateNotifier, bool>(AuthStateNotifier.new);
+final authStateProvider = NotifierProvider<AuthStateNotifier, bool>(AuthStateNotifier.new);

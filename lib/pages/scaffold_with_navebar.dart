@@ -11,26 +11,35 @@ class ScaffoldWithNavBar extends StatelessWidget {
   }) : super(key: key ?? const ValueKey<String>('ScaffoldWithNavBar'));
 
   /// The navigation shell and container for the branch Navigators.
-  final StatefulNavigationShell   navigationShell;
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        // Here, the items of BottomNavigationBar are hard coded. In a real
-        // world scenario, the items would most likely be generated from the
-        // branches of the shell route, which can be fetched using
-        // `navigationShell.route.branches`.
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.first_page), label: 'First'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: 'Second'),
-          BottomNavigationBarItem(icon: Icon(Icons.last_page), label: 'Third'),
-        ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
-      ),
-    );
+        body: navigationShell,
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (value) {
+            _onTap(context, value);
+          },
+          selectedIndex: navigationShell.currentIndex,
+          destinations: const [
+            NavigationDestination(
+              selectedIcon: Icon(Icons.first_page),
+              icon: Icon(Icons.first_page_outlined),
+              label: 'First',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.pages),
+              icon: Icon(Icons.pages_outlined),
+              label: 'Second',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.last_page),
+              icon: Icon(Icons.last_page_outlined),
+              label: 'Third',
+            ),
+          ],
+        ));
   }
 
   /// Navigate to the current location of the branch at the provided index when

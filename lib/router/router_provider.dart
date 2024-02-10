@@ -13,22 +13,15 @@ import '../pages/third_page.dart';
 import '../pages/first_page.dart';
 import '../pages/third_detail_page.dart';
 
-enum Routes {
-  signin,
-  signup,
-  firstPage,
-  firstDetailPage,
-  secondPage,
-  secondDetailPage,
-  thirdPage,
-  thirdDetailPage
-}
+enum Routes { signin, signup, firstPage, firstDetailPage, secondPage, secondDetailPage, thirdPage, thirdDetailPage }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
   return GoRouter(
+    debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
+    observers: <NavigatorObserver>[MyNavObserver()],
     initialLocation: '/first',
     redirect: (context, state) {
       final authenicated = authState;
@@ -40,72 +33,82 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(
-          path: '/signin',
-          name: Routes.signin.name,
-          builder: (context, state) => const SignInPage()),
-      GoRoute(
-          path: '/signup',
-          name: Routes.signup.name,
-          builder: (context, state) => const SignupPage()),
-      StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) =>
-              ScaffoldWithNavBar(navigationShell: navigationShell),
-          branches: [
-            StatefulShellBranch(routes: [
-              GoRoute(
-                  path: "/first",
-                  name: Routes.firstPage.name,
-                  builder: (context, state) => const FirstPage(),
-                  routes: [
-                    GoRoute(
-                      path: 'details',
-                      name: Routes.firstDetailPage.name,
-                      builder: (context, state) {
-                        return const FirstDetailPage();
-                      },
-                    )
-                  ]),
-            ]),
-            StatefulShellBranch(routes: [
-              GoRoute(
-                  path: "/second",
-                  name: Routes.secondPage.name,
-                  builder: (context, state) => const SecondPage(),
-                  routes: [
-                    GoRoute(
-                      path: 'details/:id',
-                      name: Routes.secondDetailPage.name,
-                      builder: (context, state) {
-                        final id = state.pathParameters['id']!;
-                        return SecondDetailpage(id: id);
-                      },
-                    )
-                  ])
-            ]),
-            StatefulShellBranch(routes: [
-              GoRoute(
-                  path: "/third",
-                  name: Routes.thirdPage.name,
-                  builder: (context, state) => const ThirdPage(),
-                  routes: [
-                    GoRoute(
-                      path: 'details/:id',
-                      name: Routes.thirdDetailPage.name,
-                      builder: (context, state) {
-                        final id = state.pathParameters['id']!;
-                        final firstName =
-                            state.uri.queryParameters['firstName']!;
-                        final lastName = state.uri.queryParameters['lastName']!;
-                        return ThirdDetailPage(
-                            id: id, firstName: firstName, lastName: lastName);
-                      },
-                    )
-                  ])
-            ])
+      GoRoute(path: '/signin', name: Routes.signin.name, builder: (context, state) => const SignInPage()),
+      GoRoute(path: '/signup', name: Routes.signup.name, builder: (context, state) => const SignupPage()),
+      StatefulShellRoute.indexedStack(builder: (context, state, navigationShell) => ScaffoldWithNavBar(navigationShell: navigationShell), branches: [
+        StatefulShellBranch(routes: [
+          GoRoute(path: "/first", name: Routes.firstPage.name, builder: (context, state) => const FirstPage(), routes: [
+            GoRoute(
+              path: 'details',
+              name: Routes.firstDetailPage.name,
+              builder: (context, state) {
+                return const FirstDetailPage();
+              },
+            )
           ]),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: "/second", name: Routes.secondPage.name, builder: (context, state) => const SecondPage(), routes: [
+            GoRoute(
+              parentNavigatorKey: _rootNavigatorKey,
+              path: 'details/:id',
+              name: Routes.secondDetailPage.name,
+              builder: (context, state) {
+                final id = state.pathParameters['id']!;
+                return SecondDetailpage(id: id);
+              },
+            )
+          ])
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: "/third", name: Routes.thirdPage.name, builder: (context, state) => const ThirdPage(), routes: [
+            GoRoute(
+              path: 'details/:id',
+              name: Routes.thirdDetailPage.name,
+              builder: (context, state) {
+                final id = state.pathParameters['id']!;
+                final firstName = state.uri.queryParameters['firstName']!;
+                final lastName = state.uri.queryParameters['lastName']!;
+                return ThirdDetailPage(id: id, firstName: firstName, lastName: lastName);
+              },
+            )
+          ])
+        ])
+      ]),
     ],
-    errorBuilder: (context, state) =>
-        PageNotFound(error: state.error.toString()),
+    errorBuilder: (context, state) => PageNotFound(error: state.error.toString()),
   );
 });
+
+//* usefull for analytics and debuging
+class MyNavObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    debugPrint('didPush ${route.settings.name}');
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    debugPrint('didPop ${route.settings.name}');
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    debugPrint('didRemove ${route.settings.name}');
+  }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    debugPrint('didReplace ${newRoute!.settings.name}');
+  }
+
+  @override
+  void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    debugPrint('didStartUserGesture ${route.settings.name}');
+  }
+
+  @override
+  void didStopUserGesture() {
+    debugPrint('didStopUserGesture');
+  }
+}

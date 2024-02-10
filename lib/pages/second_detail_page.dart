@@ -7,9 +7,12 @@ class SecondDetailpage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text("Second Detail Page"), backgroundColor: Theme.of(context).colorScheme.primaryContainer, centerTitle: true),
       body: Center(
-        child: Text("Your Id : $id"),
+        child: Text(
+          "Path Parameter : $id",
+          style: const TextStyle(fontSize: 23),
+        ),
       ),
     );
   }
