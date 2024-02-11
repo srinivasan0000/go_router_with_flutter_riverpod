@@ -10,6 +10,14 @@ class FirstDetailPage extends ConsumerStatefulWidget {
 }
 
 class _FirstDetailPageState extends ConsumerState<FirstDetailPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
   int counter = 0;
   @override
   Widget build(BuildContext context) {

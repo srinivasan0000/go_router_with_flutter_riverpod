@@ -74,6 +74,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                   builder: (context, state) => const SecondPage(),
                   routes: [
                     GoRoute(
+                      parentNavigatorKey: _rootNavigatorKey,
                       path: 'details/:id',
                       name: Routes.secondDetailPage.name,
                       builder: (context, state) {

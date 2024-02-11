@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_with_flutter_riverpod/main.dart';
 import '../router/router_provider.dart';
 
 class SignInPage extends ConsumerWidget {
@@ -37,10 +38,11 @@ class SignInPage extends ConsumerWidget {
 class AuthStateNotifier extends Notifier<bool> {
   @override
   build() {
-    return false;
+    return ref.read(sharedPreferencesProvider).getBool("authState") ?? false;
   }
 
-  void setAuthState(bool value) {
+  void setAuthState(bool value) async {
+    await ref.read(sharedPreferencesProvider).setBool("authState", value);
     state = value;
   }
 }

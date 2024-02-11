@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:go_router_with_flutter_riverpod/router/router_provider.dart';
 
 class PageNotFound extends ConsumerWidget {
   const PageNotFound({super.key, required this.error});
@@ -17,7 +19,7 @@ class PageNotFound extends ConsumerWidget {
               Text(error),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.goNamed(Routes.firstPage.name);
                   },
                   child: const Text("Back to first Page")),
             ],
