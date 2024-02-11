@@ -11,16 +11,18 @@ class FirstPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Page'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        centerTitle: true,
       ),
       body: Center(
           child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("First Page"),
           ElevatedButton(
               onPressed: () {
                 GoRouter.of(context).goNamed(Routes.firstDetailPage.name);
               },
-              child: const Text("First Detail"))
+              child: const Text("View First Detail"))
         ],
       )),
     );

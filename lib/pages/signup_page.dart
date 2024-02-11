@@ -11,10 +11,13 @@ class SignupPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('SignUp'),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      ),
       body: Center(
         child: Column(children: [
-          const Text("Signup"),
           ElevatedButton(
               onPressed: () {
                 ref.read(authStateProvider.notifier).setAuthState(true);
