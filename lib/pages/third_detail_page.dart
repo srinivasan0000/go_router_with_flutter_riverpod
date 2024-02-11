@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThirdDetailPage extends ConsumerWidget {
-  const ThirdDetailPage({super.key, required this.id, required this.firstName, required this.lastName});
+  const ThirdDetailPage(
+      {super.key,
+      required this.id,
+      required this.firstName,
+      required this.lastName});
   final String id;
   final String firstName;
   final String lastName;
@@ -17,6 +21,7 @@ class ThirdDetailPage extends ConsumerWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("PathParameter : $id"),
             Text("QueryParameter First Name : $firstName"),
